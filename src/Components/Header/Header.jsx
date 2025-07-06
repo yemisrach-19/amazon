@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LowerHeader from "./LowerHeader";
 import classes from "./Header.module.css";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -11,13 +12,13 @@ const Header = () => {
       <div className={classes.header__container}>
         {/* Logo */}
         <div className={classes.logo__container}>
-          <a href="/">
+          <Link to="/">
             <img
               src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
               alt="Amazon logo"
               style={{ width: "100px", height: "auto" }}
             />
-          </a>
+          </Link>
           <div className={classes.delivery}>
             {/* Delivery */}
             <span>
@@ -41,7 +42,7 @@ const Header = () => {
 
         {/* Right Side Links */}
         <div className={classes.order__container}>
-          <a href="" className={classes.language}>
+          <Link to  ="" className={classes.language}>
             <img
               src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1024px-Flag_of_the_United_States.svg.png"
               alt="United States Flag"
@@ -49,7 +50,7 @@ const Header = () => {
             <select name="language" id="language-select">
               <option value="">EN</option>
             </select>
-          </a>
+          </Link>
 
           {/* Sign In */}
           <a href="">
@@ -58,19 +59,19 @@ const Header = () => {
           </a>
 
           {/* Returns & Orders */}
-          <a href="">
+          <Link to ="/Orders">
             <p>Returns</p>
             <span>& Orders</span>
-          </a>
+          </Link>
 
           {/* Cart */}
-          <a href="/cart" className={classes.cart}>
+          <Link to  ="/cart" className={classes.cart}>
             <ShoppingCartCheckoutIcon style={{ fontSize: 35 }} />
             <span>0</span>
-          </a>
+          </Link>
         </div>
       </div>
-      <LowerHeader /> {/* Moved inside the section */}
+      <LowerHeader /> 
     </section>
   );
 };
