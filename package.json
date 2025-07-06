@@ -16,6 +16,7 @@
     "@mui/material": "^7.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "reacticons": "^0.0.1"
   },
   "devDependencies": {
