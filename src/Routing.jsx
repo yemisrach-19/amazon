@@ -4,6 +4,7 @@ import Payment from "./Pages/Payment/Payments.jsx";
 import Orders from "./pages/Orders/Orders.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import Signup from "./Pages/Auth/Signup.jsx";
+import Results from "./Pages/Result/Results.jsx";
 
 function Routing() {
   return (
@@ -13,6 +14,7 @@ function Routing() {
         <Route path="/auth" element={<Signup />} />
         <Route path="/Payments" element={<Payment />} />
         <Route path="/Orders" element={<Orders />} />
+        <Route path="/category/:categoryName" element={<Results />} />
         <Route path="/Cart" element={<Cart />} />
       </Routes>
     </Router>
