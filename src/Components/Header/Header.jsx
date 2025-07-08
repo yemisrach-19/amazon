@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LowerHeader from "./LowerHeader";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
+import { DataContext } from "../DataProvider/DataProvider";
 
 const Header = () => {
+  const [{ basket }, dispatch] = useContext(DataContext);
+
   return (
-    <section>
+    <section className={classes.fixed}> 
       <div className={classes.header__container}>
         {/* Logo */}
         <div className={classes.logo__container}>
@@ -42,7 +45,7 @@ const Header = () => {
 
         {/* Right Side Links */}
         <div className={classes.order__container}>
-          <Link to  ="" className={classes.language}>
+          <Link to="" className={classes.language}>
             <img
               src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1024px-Flag_of_the_United_States.svg.png"
               alt="United States Flag"
@@ -59,19 +62,19 @@ const Header = () => {
           </a>
 
           {/* Returns & Orders */}
-          <Link to ="/Orders">
+          <Link to="/Orders">
             <p>Returns</p>
             <span>& Orders</span>
           </Link>
 
           {/* Cart */}
-          <Link to  ="/cart" className={classes.cart}>
+          <Link to="/cart" className={classes.cart}>
             <ShoppingCartCheckoutIcon style={{ fontSize: 35 }} />
-            <span>0</span>
+            <span>{basket.length}</span>
           </Link>
         </div>
       </div>
-      <LowerHeader /> 
+      <LowerHeader />
     </section>
   );
 };
