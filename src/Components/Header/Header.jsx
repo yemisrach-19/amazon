@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
 
 const Header = () => {
-  const [{ basket }, dispatch] = useContext(DataContext);
+  const [{ basket }] = useContext(DataContext);
 
   return (
-    <section className={classes.fixed}> 
+    <section className={classes.fixed}>
       <div className={classes.header__container}>
         {/* Logo */}
         <div className={classes.logo__container}>
