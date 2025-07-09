@@ -59,10 +59,10 @@ const Header = () => {
           </Link>
 
           {/* Sign In */}
-          <a href="">
+          <Link to="/SignUp">
             <p>Sign In</p>
             <span>Account & Lists</span>
-          </a>
+          </Link>
 
           {/* Returns & Orders */}
           <Link to="/Orders">
