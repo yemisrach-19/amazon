@@ -5,10 +5,24 @@ import ProductCard from "../../Components/Product/ProductCard";
 import CurrencyFormatter from "../../Components/CurrencyFormatter/CurrencyFormatter";
 import { Link } from "react-router-dom";
 import classes from "./Cart.module.css";
-
+import { Type } from "../../Utility/actionType";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 const Cart = () => {
-  const [{ basket, user }, dispatch] = useContext(DataContext);
-  const total = basket.reduce((amount, item) => item.price*item.amount + amount, 0);
+  const [{ basket }, dispatch] = useContext(DataContext);
+  const total = basket.reduce(
+    (amount, item) => item.price * item.amount + amount,
+    0
+  );
+  const increment = (item) => {
+    dispatch({
+      type: Type.ADD_TO_BASKET,
+      item,
+    });
+  };
+  const decrement = (itemId) => {
+    dispatch({ type: Type.REMOVE_FROM_BASKET, id: itemId });
+  };
   return (
     <LayOut>
       <section className={classes.container}>
@@ -21,13 +35,30 @@ const Cart = () => {
           ) : (
             basket?.map((item, i) => {
               return (
-                <ProductCard
-                  key={i}
-                  product={item}
-                  renderDesc={true}
-                  renderAdd={false}
-                  flex={true}
-                />
+                <section className={classes.cart_product}>
+                  <ProductCard
+                    key={i}
+                    product={item}
+                    renderDesc={true}
+                    renderAdd={false}
+                    flex={true}
+                  />
+                  <div className={classes.btn_container}>
+                    <button
+                      className={classes.btn}
+                      onClick={() => increment(item)}
+                    >
+                      <KeyboardArrowUpIcon />
+                    </button>
+                    <span>{item.amount}</span>
+                    <button
+                      className={classes.btn}
+                      onClick={() => decrement(item.id)}
+                    >
+                      <KeyboardArrowDownIcon />
+                    </button>
+                  </div>
+                </section>
               );
             })
           )}
