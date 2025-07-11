@@ -12,7 +12,7 @@ function Routing() {
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/Signup" element={<Auth />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/Payments" element={<Payment />} />
         <Route path="/Orders" element={<Orders />} />
         <Route path="/category/:categoryName" element={<Results />} />

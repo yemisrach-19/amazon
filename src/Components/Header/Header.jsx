@@ -6,9 +6,10 @@ import LowerHeader from "./LowerHeader";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
+import { auth } from "../../Utility/fireBase";
 
 const Header = () => {
-  const [{ basket }] = useContext(DataContext);
+  const [{ basket, user }] = useContext(DataContext);
   const totalItem = basket?.reduce((amount, item) => {
     return item.amount + amount;
   }, 0);
@@ -43,7 +44,7 @@ const Header = () => {
             <option value="">All</option>
           </select>
           <input type="text" />
-          <SearchIcon style={{ fontSize: 25 }} />
+          <SearchIcon style={{ fontSize: 39 }} />
         </div>
 
         {/* Right Side Links */}
@@ -58,10 +59,20 @@ const Header = () => {
             </select>
           </Link>
 
-          {/* Sign In */}
-          <Link to="/SignUp">
-            <p>Sign In</p>
-            <span>Account & Lists</span>
+          <Link to={!user && "/auth"}>
+            <div>
+              {user ? (
+                <>
+                  <p>Hello, {user.email.split("@")[0]}</p>
+                  <span onClick={() => auth.signOut()}> Sign Out</span>
+                </>
+              ) : (
+                <>
+                  <p>Hello, Sign In</p>
+                  <span>Account & List</span>
+                </>
+              )}
+            </div>
           </Link>
 
           {/* Returns & Orders */}

@@ -42,7 +42,7 @@ export const reducer = (state, action) => {
     case Type.SET_USER:
       return { ...state, user: action.user };
 
-    default: 
+    default:
       return state;
   }
 };
