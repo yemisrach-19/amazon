@@ -10,7 +10,7 @@ import { ClipLoader } from "react-spinners";
 import { db } from "../../Utility/fireBase";
 import { useNavigate } from "react-router-dom";
 export const Payments = () => {
-  const [{ user, basket }] = useContext(DataContext);
+  const [{ user, basket }, dispatch] = useContext(DataContext);
 
   const total = basket.reduce(
     (amount, item) => item.price * item.amount + amount,
@@ -53,6 +53,8 @@ export const Payments = () => {
           amount: paymentIntent.amount,
           created: paymentIntent.created,
         });
+      //empity basket
+      dispatch({ type: Type.EMPITY_BASKET });
       setProcessing(false);
       navigate("/orders", { state: { msg: "you have placed new orders" } });
     } catch (error) {}

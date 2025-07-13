@@ -37,7 +37,7 @@ const Cart = () => {
               return (
                 <section className={classes.cart_product}>
                   <ProductCard
-                    key={i}
+                    key={item.id}
                     product={item}
                     renderDesc={true}
                     renderAdd={false}

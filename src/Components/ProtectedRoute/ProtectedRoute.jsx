@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children, msg, redirect }) => {
       navigate("/auth", { state: { msg, redirect } });
     }
   }, [user]);
-  return <div>ProtectedRoute</div>;
+  return user?children:null
 };
 
 export default ProtectedRoute;
