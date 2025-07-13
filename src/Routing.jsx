@@ -9,6 +9,7 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
+
 function Routing() {
   const stripePromise = loadStripe(
     "pk_test_51RUyiOD5oRDL7TDM1nhymJMZI4HqqpV0ofC6Bl6UyH6gAQTcAxYBd9I1MAVlnMraXJHn8RfFMZXUhMpbkBzBDYgY001jm1vDjJ"

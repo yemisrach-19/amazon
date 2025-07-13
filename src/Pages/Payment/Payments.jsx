@@ -5,7 +5,10 @@ import { DataContext } from "../../Components/DataProvider/DataProvider";
 import ProductCard from "../../Components/Product/ProductCard";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormatter from "../../Components/CurrencyFormatter/CurrencyFormatter";
-
+import { axiosInstance } from "../../API/axios";
+import { ClipLoader } from "react-spinners";
+import { db } from "../../Utility/fireBase";
+import { useNavigate } from "react-router-dom";
 export const Payments = () => {
   const [{ user, basket }] = useContext(DataContext);
 
@@ -17,10 +20,43 @@ export const Payments = () => {
     return item.amount + amount;
   }, 0);
   const [cardError, setCardError] = useState();
+  const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
-  const elements = useElements;
+  const elements = useElements();
+  const navigate = useNavigate();
   const handleChange = (e) => {
     e.error?.mesage ? setCardError(e?.error?.message) : setCardError("");
+  };
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    try {
+      setProcessing(true);
+      //1//contact to client
+      const response = await axiosInstance({
+        method: "POST",
+        url: `payment/create?total=${total * 100}`,
+      });
+      const clientSecret = response.data?.clientSecret;
+
+      //2//react side confirmation
+      const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: elements.getElement(CardElement) },
+      });
+      //3//orderon fire store database and clear basket
+      await db
+        .collection("users")
+        .doc(user.uid)
+        .collection("orders")
+        .doc(paymentIntent.id)
+        .set({
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+      setProcessing(false);
+      navigate("/orders", { state: { msg: "you have placed new orders" } });
+    } catch (error) {}
+    setProcessing(false);
   };
   return (
     <LayOut>
@@ -53,7 +89,7 @@ export const Payments = () => {
           <h3>payment method</h3>
           <div className={classes.payment__card__container}>
             <div className={classes.payment__details}>
-              <form action="">
+              <form onSubmit={handlePayment}>
                 {/*error*/}
                 {cardError && (
                   <small style={{ color: "red" }}>{cardError}</small>
@@ -67,7 +103,16 @@ export const Payments = () => {
                       <CurrencyFormatter amount={total} />
                     </span>
                   </div>
-                  <button>Pay Now</button>
+                  <button type="submit">
+                    {processing ? (
+                      <div className={classes.loading}>
+                        <ClipLoader color="gray" size={12} />
+                        <p>please wait ...</p>
+                      </div>
+                    ) : (
+                      "Pay Now"
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
